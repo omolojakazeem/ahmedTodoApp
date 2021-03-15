@@ -1,0 +1,63 @@
+{% extends 'todo/base.html' %}
+
+{% block page_title %}
+  Todo List
+{% endblock page_title %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Todo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Todo Categories</a>
+            </li>
+             {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account:user_logout' %}">Logout</a>
+              </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Login</a>
+                </li>
+
+                 <li class="nav-item">
+                  <a class="nav-link" href="#">Register</a>
+                </li>
+            {% endif %}
+
+
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock navbar %}
+
+
+    {% block todos %}
+        <div class="center-column">
+            <h1>Todo List</h1>
+                {% for todo in todos %}
+                <div class="item-row">
+                    <a href="{% url 'todo:edit_todo' todo.id %}" class="btn btn-sm btn-info">Edit</a>
+                    <a href="{% url 'todo:delete_todo' todo.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    {% if todo.is_completed %}
+                        <strike>{{todo}}</strike>
+                    {% else %}
+                        {{todo}}
+                    {% endif %}
+                </div>
+                {% endfor %}
+    {% endblock todos %}
+</div>

@@ -1,0 +1,60 @@
+{% extends 'todo/base.html' %}
+
+{% block page_title %}
+  Todo List
+{% endblock page_title %}
+
+{% block navbar %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Todo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Todo Categories</a>
+            </li>
+             {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="#">Profile</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'account:user_logout' %}">Logout</a>
+              </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Login</a>
+                </li>
+
+                 <li class="nav-item">
+                  <a class="nav-link" href="#">Register</a>
+                </li>
+            {% endif %}
+
+
+
+          </ul>
+        </div>
+      </div>
+    </nav>
+{% endblock navbar %}
+
+
+    {% block todos %}
+        <div class="center-column">
+            <h1>Todo List</h1>
+                <div class="item-row">
+                    <p>Are you sure you want to delete this Todo Item?</p>
+                    <p> <a href="{% url 'todo:homepage' %}">Cancel</a>  </p>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input name ="delete_todo" class="btn btn-danger" type="submit" value="Confirm Delete">
+                    </form>
+                </div>
+    {% endblock todos %}
+</div>
