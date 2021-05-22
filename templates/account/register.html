@@ -1,5 +1,5 @@
 {% extends 'todo/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block page_title %}
   Todo List
 {% endblock page_title %}
@@ -17,7 +17,7 @@
               <a class="nav-link active" aria-current="page" href="{% url 'todo:homepage' %}">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'todo:category_index' %}">Todo Categories</a>
+              <a class="nav-link" href="#">Todo Categories</a>
             </li>
              {% if request.user.is_authenticated %}
               <li class="nav-item">
@@ -25,10 +25,6 @@
               </li>
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'account:user_logout' %}">Logout</a>
-              </li>
-
-              <li class="nav-item">
-                  <a class="nav-link" href="">Welcome - {{request.user}}</a>
               </li>
               {% else %}
                 <li class="nav-item">
@@ -38,7 +34,6 @@
                  <li class="nav-item">
                   <a class="nav-link" href="{% url 'account:user_register' %}">Register</a>
                 </li>
-
             {% endif %}
 
 
@@ -52,17 +47,14 @@
 
     {% block todos %}
         <div class="center-column">
-            <h1 style="display:inline;">Todo List</h1> <a href="{% url 'todo:create_todo' %}" class="btn btn-primary " style="display:inline; position:relative; left: 295px;">Add Todo</a>
-                {% for todo in todos %}
+            <h1>New User Registeration</h1>
                 <div class="item-row">
-                    <a href="{% url 'todo:edit_todo' todo.id %}" class="btn btn-sm btn-info">Edit</a>
-                    <a href="{% url 'todo:delete_todo' todo.id %}" class="btn btn-sm btn-danger">Delete</a>
-                    {% if todo.is_completed %}
-                        <strike>{{todo}}</strike>
-                    {% else %}
-                        {{todo}}
-                    {% endif %}
+
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        {{signup_form | crispy}}
+                        <input name ="create_todo" class="btn btn-primary" type="submit" value="Submit">
+                    </form>
                 </div>
-                {% endfor %}
     {% endblock todos %}
 </div>
